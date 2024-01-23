@@ -1,8 +1,10 @@
 import java.sql.*;
+import java.util.concurrent.locks.StampedLock;
+
 public class Main {
     public static final String url = "jdbc:postgresql://localhost:5432/PatikaDB";
     public static final String user = "postgres";
-    public static final String password = "******";
+    public static final String password = "fatmaG67";
 
     public static void main(String[] args) {
 
@@ -47,6 +49,23 @@ public class Main {
                 }
 
                 System.out.println("Emloyees verileri başarıyla girildi.");
+
+                //ResultSet ile tüm tablodaki verileri seçiyoruz.
+
+                Statement st = null;
+
+                try (ResultSet resultSet = st.executeQuery("SELECT * FROM employees")) {
+
+                    // next() metodu satırları yazdırıyoruz.
+
+                    while (resultSet.next()) {
+                        System.out.println("ID : " + resultSet.getInt("id"));
+                        System.out.println("Adı : " + resultSet.getString("ame"));
+                        System.out.println("Pozisyon : " + resultSet.getString("position"));
+                        System.out.println("Maaş : " + resultSet.getInt("salary"));
+                    }
+                }
+
             }
 
         }
